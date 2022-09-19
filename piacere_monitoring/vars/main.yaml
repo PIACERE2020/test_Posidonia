@@ -1,8 +1,8 @@
-pma_deployment_id: "123e4567-e89b-12d3-a456-426614174002"
-pma_influxdb_bucket: "bucket"
-pma_influxdb_token: "piacerePassword"
-pma_influxdb_org: "piacere"
-pma_influxdb_addr: "https://influxdb.pm.ci.piacere.digital.tecnalia.dev"
+pma_deployment_id: "{{ lookup('env', 'DEPLOYMENT_ID' ) }}" 
+pma_influxdb_bucket:  "{{ lookup('env', 'INFLUXDB_BUCKET' ) }}"
+pma_influxdb_token:  "{{ lookup('env', 'INFLUXDB_TOKEN' ) }}"
+pma_influxdb_org:  "{{ lookup('env', 'INFLUXDB_ORG' ) }}"
+pma_influxdb_addr:  "{{ lookup('env', 'INFLUXDB_ADDR' ) }}"
 
 telegraf_agent_package_state: latest
 

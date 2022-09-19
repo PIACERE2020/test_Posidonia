@@ -1,5 +1,6 @@
 ---
 iac:
 - terraform
+- piacere_monitoring_requirements
 - piacere_monitoring
 ...
