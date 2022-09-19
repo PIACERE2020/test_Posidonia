@@ -137,20 +137,7 @@ resource "openstack_networking_subnet_v2" "subnet1_subnet" {
   network_id      = openstack_networking_network_v2.vpc.id
   cidr            = "10.100.1.0/24"
   dns_nameservers = ["8.8.8.8", "8.8.8.4"]
-}# Subnet
-resource "openstack_networking_subnet_v2" "subnet2_subnet" {
-  name            = "subnet2_subnet"
-  network_id      = openstack_networking_network_v2.vpc.id
-  cidr            = "10.100.2.0/24"
-  dns_nameservers = ["8.8.8.8", "8.8.8.4"]
-}# Subnet
-resource "openstack_networking_subnet_v2" "subnet3_subnet" {
-  name            = "subnet3_subnet"
-  network_id      = openstack_networking_network_v2.vpc.id
-  cidr            = "10.100.3.0/24"
-  dns_nameservers = ["8.8.8.8", "8.8.8.4"]
 }
-
 
 # Create Network
 resource "openstack_networking_network_v2" "net1" {
