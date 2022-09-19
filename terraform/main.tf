@@ -28,7 +28,7 @@ resource "openstack_compute_instance_v2" "OracleDB" {
   flavor_name = "small"
   key_pair    = openstack_compute_keypair_v2.user1.name
   network { 
-    port = openstack_networking_port_v2.net1_subnet.id
+    port = openstack_networking_port_v2.net1.id
     
   }
 }
