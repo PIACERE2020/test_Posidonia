@@ -159,9 +159,9 @@ resource "openstack_networking_port_v2" "vpc" {
   security_group_ids = [
   
   ]
-  # fixed_ip { ## TODO to be fixed (not working for posidonia example, needed for openstack example)
-  #  subnet_id = openstack_networking_subnet_v2.vpc_subnet.id
-  #}
+  fixed_ip { ## TODO to be fixed (not working for posidonia example, needed for openstack example)
+    subnet_id = openstack_networking_subnet_v2.subnet1_subnet.id
+  }
 }
 
 # Create router
@@ -175,11 +175,17 @@ resource "openstack_networking_router_interface_v2" "vpc_router_interface" {
   # subnet_id = openstack_networking_subnet_v2.vpc_subnet.id ## TODO to be fixed (not working for posidonia example, needed for openstack example)
 }
 
-
+# generate random string
+resource "random_string" "key_pair_user_name" {
+  length           = 16
+  special          = false
+  upper            = false
+  numeric          = false
+}
 
 # Create ssh keys
 resource "openstack_compute_keypair_v2" "DbKeyName" {
-  name       = "oracledb"
+  name       = random_string.key_pair_user_name.result
   # public_key = "oracledb"
 }
 
