@@ -1,8 +1,12 @@
 
 ---
 input:
-  - instance_ip_vm1
+  - instance_server_public_key_user1
   - instance_server_private_key_user1
+  - instance_ip_OracleDB
+  - instance_ip_gestaut_vm
+  - instance_ip_elasticsearch_vm
+  - instance_ip_edi_vm
   - DEPLOYMENT_ID
 output: []
 engine: ansible
