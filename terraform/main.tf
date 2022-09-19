@@ -172,7 +172,7 @@ resource "openstack_networking_router_v2" "vpc_router" {
 # Router interface configuration
 resource "openstack_networking_router_interface_v2" "vpc_router_interface" {
   router_id = openstack_networking_router_v2.vpc_router.id
-  subnet_id = openstack_networking_subnet_v2.vpc_subnet.id ## TODO to be fixed (not working for posidonia example, needed for openstack example)
+  subnet_id = openstack_networking_subnet_v2.subnet1_subnet.id ## TODO to be fixed (not working for posidonia example, needed for openstack example)
 }
 
 # generate random string
