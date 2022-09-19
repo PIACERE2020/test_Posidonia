@@ -124,65 +124,85 @@ resource "openstack_compute_floatingip_associate_v2" "edi_vm_floating_ip_associa
 
 ## Network
 
+## Network
+
+# Create Network
+resource "openstack_networking_network_v2" "vpc" {
+  name = "concrete_vpc"
+}
+
+# Subnet
+resource "openstack_networking_subnet_v2" "subnet1_subnet" {
+  name            = "subnet1_subnet"
+  network_id      = openstack_networking_network_v2.vpc.id
+  cidr            = "10.100.1.0/24"
+  dns_nameservers = ["8.8.8.8", "8.8.8.4"]
+}# Subnet
+resource "openstack_networking_subnet_v2" "subnet2_subnet" {
+  name            = "subnet2_subnet"
+  network_id      = openstack_networking_network_v2.vpc.id
+  cidr            = "10.100.2.0/24"
+  dns_nameservers = ["8.8.8.8", "8.8.8.4"]
+}# Subnet
+resource "openstack_networking_subnet_v2" "subnet3_subnet" {
+  name            = "subnet3_subnet"
+  network_id      = openstack_networking_network_v2.vpc.id
+  cidr            = "10.100.3.0/24"
+  dns_nameservers = ["8.8.8.8", "8.8.8.4"]
+}
+
+
 # Create Network
 resource "openstack_networking_network_v2" "net1" {
   name = "concrete_net"
 }
 
-# Create Subnet
-resource "openstack_networking_subnet_v2" "net1_subnet" {
-  name            = "concrete_net_subnet"
-  network_id      = openstack_networking_network_v2.net1.id
-  cidr            = "16.0.0.0/24"
-  dns_nameservers = ["8.8.8.8", "8.8.8.4"]
-}
-
 # Attach networking port
 resource "openstack_networking_port_v2" "net1_1" {
   name           = "port1_1"
-  network_id     = openstack_networking_network_v2.net1.id
+  network_id     = openstack_networking_network_v2.vpc.id
   admin_state_up = true
   security_group_ids = [
   openstack_compute_secgroup_v2.nginx.id,
   ]
   fixed_ip {
-    subnet_id = openstack_networking_subnet_v2.net1_subnet.id
+    subnet_id = openstack_networking_subnet_v2.subnet1_subnet.id
   }
 }
 
 resource "openstack_networking_port_v2" "net1_2" {
   name           = "port1_2"
-  network_id     = openstack_networking_network_v2.net1.id
+  network_id     = openstack_networking_network_v2.vpc.id
   admin_state_up = true
   security_group_ids = [
   openstack_compute_secgroup_v2.nginx.id,
   ]
   fixed_ip {
-    subnet_id = openstack_networking_subnet_v2.net1_subnet.id
+    subnet_id = openstack_networking_subnet_v2.subnet1_subnet.id
   }
 }
 
 resource "openstack_networking_port_v2" "net1_3" {
   name           = "port1_3"
-  network_id     = openstack_networking_network_v2.net1.id
+  network_id     = openstack_networking_network_v2.vpc.id
   admin_state_up = true
   security_group_ids = [
   openstack_compute_secgroup_v2.nginx.id,
   ]
   fixed_ip {
-    subnet_id = openstack_networking_subnet_v2.net1_subnet.id
+    subnet_id = openstack_networking_subnet_v2.subnet1_subnet.id
   }
 }
 
 resource "openstack_networking_port_v2" "net1_4" {
   name           = "port1_4"
-  network_id     = openstack_networking_network_v2.net1.id
+  network_id     = openstack_networking_network_v2.vpc.id
   admin_state_up = true
   security_group_ids = [
   openstack_compute_secgroup_v2.nginx.id,
   ]
   fixed_ip {
-    subnet_id = openstack_networking_subnet_v2.net1_subnet.id
+    subnet_id = openstack_networking_subnet_v2.subnet1_subnet.id
   }
 }
 # Create router
@@ -193,7 +213,7 @@ resource "openstack_networking_router_v2" "net1_router" {
 # Router interface configuration
 resource "openstack_networking_router_interface_v2" "net1_router_interface" {
   router_id = openstack_networking_router_v2.net1_router.id
-  subnet_id = openstack_networking_subnet_v2.net1_subnet.id
+  subnet_id = openstack_networking_subnet_v2.subnet1_subnet.id
 }
 
 # generate random string
