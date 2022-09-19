@@ -28,7 +28,7 @@ resource "openstack_compute_instance_v2" "OracleDB" {
   flavor_name = "small"
   key_pair    = openstack_compute_keypair_v2.user1.name
   network { 
-    port = openstack_networking_port_v2.net1.id
+    port = openstack_networking_port_v2.net1_1.id
     
   }
 }
@@ -54,7 +54,7 @@ resource "openstack_compute_instance_v2" "gestaut_vm" {
   flavor_name = "small"
   key_pair    = openstack_compute_keypair_v2.user1.name
   network { 
-    port = openstack_networking_port_v2.net1.id
+    port = openstack_networking_port_v2.net1_2.id
     
   }
 }
@@ -140,8 +140,8 @@ resource "openstack_networking_subnet_v2" "net1_subnet" {
 }
 
 # Attach networking port
-resource "openstack_networking_port_v2" "net1" {
-  name           = "concrete_net"
+resource "openstack_networking_port_v2" "net1_1" {
+  name           = "port1_1"
   network_id     = openstack_networking_network_v2.net1.id
   admin_state_up = true
   security_group_ids = [
@@ -152,6 +152,17 @@ resource "openstack_networking_port_v2" "net1" {
   }
 }
 
+resource "openstack_networking_port_v2" "net1_2" {
+  name           = "port1_2"
+  network_id     = openstack_networking_network_v2.net1.id
+  admin_state_up = true
+  security_group_ids = [
+  openstack_compute_secgroup_v2.nginx.id,
+  ]
+  fixed_ip {
+    subnet_id = openstack_networking_subnet_v2.net1_subnet.id
+  }
+}
 # Create router
 resource "openstack_networking_router_v2" "net1_router" {
   name                = "net1_router"
