@@ -47,29 +47,29 @@ resource "openstack_compute_floatingip_associate_v2" "OracleDB_floating_ip_assoc
 
 
 
-# # Create virtual machine
-# resource "openstack_compute_instance_v2" "gestaut_vm" {
-#   name        = "concrete_gestaut_vm"
-#   image_name  = "Ubuntu-Focal-20.04-Daily-2022-04-19"
-#   flavor_name = "small"
-#   key_pair    = openstack_compute_keypair_v2.user1.name
-#   network { 
-#     port = openstack_networking_port_v2.net1_subnet.id
+# Create virtual machine
+resource "openstack_compute_instance_v2" "gestaut_vm" {
+  name        = "concrete_gestaut_vm"
+  image_name  = "Ubuntu-Focal-20.04-Daily-2022-04-19"
+  flavor_name = "small"
+  key_pair    = openstack_compute_keypair_v2.user1.name
+  network { 
+    port = openstack_networking_port_v2.net1.id
     
-#   }
-# }
+  }
+}
 
-# # Create floating ip
-# resource "openstack_networking_floatingip_v2" "gestaut_vm_floating_ip" {
-#   pool = "external"
-#   # fixed_ip = ""
-# }
+# Create floating ip
+resource "openstack_networking_floatingip_v2" "gestaut_vm_floating_ip" {
+  pool = "external"
+  # fixed_ip = ""
+}
 
-# # Attach floating ip to instance
-# resource "openstack_compute_floatingip_associate_v2" "gestaut_vm_floating_ip_association" {
-#   floating_ip = openstack_networking_floatingip_v2.gestaut_vm_floating_ip.address
-#   instance_id = openstack_compute_instance_v2.gestaut_vm.id
-# }
+# Attach floating ip to instance
+resource "openstack_compute_floatingip_associate_v2" "gestaut_vm_floating_ip_association" {
+  floating_ip = openstack_networking_floatingip_v2.gestaut_vm_floating_ip.address
+  instance_id = openstack_compute_instance_v2.gestaut_vm.id
+}
 
 
 
