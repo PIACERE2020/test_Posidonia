@@ -1,0 +1,11 @@
+
+---
+input:
+  - instance_OracleDB
+  - instance_gestaut_vm
+  - instance_elasticsearch_vm
+  - instance_edi_vm
+  - instance_server_private_key_user1
+output: []
+engine: ansible
+...
